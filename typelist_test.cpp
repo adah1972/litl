@@ -22,6 +22,12 @@ template <int N>
 struct IsEven<std::integral_constant<int, N>>
     : std::bool_constant<(N % 2) == 0> {};
 
+// Metafunction: returns the "larger" type
+template <typename T, typename U>
+struct Max {
+    using type = std::conditional_t<(sizeof(T) >= sizeof(U)), T, U>;
+};
+
 // Metafunction: squares an integral constant
 template <typename T>
 struct Square;
@@ -191,6 +197,10 @@ int main()
 
     // Reduce can be slightly simpler
     static_assert(std::is_same_v<Reduce_t<Sum, NumSeq>, Int<6>>);
+
+    // Reduce is more natural in the Max example
+    using Largest = Reduce_t<Max, TypeList<int, short, long long, char>>;
+    static_assert(std::is_same_v<Largest, long long>);
 
     // Reverse implementation
     static_assert(std::is_same_v<Reverse_t<NumSeq>,

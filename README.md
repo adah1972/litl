@@ -121,11 +121,11 @@ using Integers = Filter_t<std::is_integral, Mixed>;
 // Reduce: reduce list to a single type (implemented with FoldLeft)
 template <typename T, typename U>
 struct Max {
-    using type = std::conditional_t<(sizeof(T) > sizeof(U)), T, U>;
+    using type = std::conditional_t<(sizeof(T) >= sizeof(U)), T, U>;
 };
 
-using Largest = Reduce_t<Max, TypeList<int, short, long, double>>;
-// double (largest type)
+using Largest = Reduce_t<Max, TypeList<int, short, long long, char>>;
+// long long (largest type)
 
 // Reverse (implemented with FoldLeft)
 using Reversed = Reverse_t<Original>;
