@@ -182,7 +182,7 @@ template <typename List, std::size_t Pos, typename Item>
 using ListSet_t = typename ListSet<List, Pos, Item>::type;
 
 template <typename T>
-struct IsList : std::false_type {};
+struct IsList : std::false_type {};  // (list? v)
 
 template <typename... Ts>
 struct IsList<TypeList<Ts...>> : std::true_type {};
@@ -191,7 +191,7 @@ template <typename T>
 inline constexpr bool IsList_v = IsList<T>::value;
 
 template <typename List>
-struct IsEmpty : std::false_type {};  // (null? lst)
+struct IsEmpty : std::false_type {};  // (null? v)
 
 template <>
 struct IsEmpty<TypeList<>> : std::true_type {};
