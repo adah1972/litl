@@ -225,17 +225,19 @@ using Tup = Apply_t<MakeTuple, List>;  // std::tuple<int, double, char>
 
 ### List Queries
 
-- `IsList<T>` – Check if type is a TypeList
+- `IsList<T>` – Check if type is a TypeList (Lisp: list?)
 - `IsEmpty<List>` – Check if list is empty (Lisp: null?)
 - `Size<List>` – Number of elements (Lisp: length)
 - `Contains<List, T>` – Check if type is in list
 
 ### Predicates
 
-- `All<Pred, List>` – All elements satisfy predicate
-- `Any<Pred, List>` – At least one element satisfies predicate
+- `All<Pred, List>` – All elements satisfy predicate (Lisp: every)
+- `Any<Pred, List>` – At least one element satisfies predicate (Lisp:
+  any)
 - `None<Pred, List>` – No elements satisfy predicate
-- `Find<Pred, List>` – Index of first match or size if not found (Lisp: list-index)
+- `Find<Pred, List>` – Index of first match or size if not found (Lisp:
+  list-index)
 - `FindLast<Pred, List>` – Index of last match or size if not found
 
 ### Transformations
