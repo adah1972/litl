@@ -76,6 +76,11 @@ using WithChar = Append_t<Numbers, char>;      // TypeList<int, long, short, cha
 using Combined = Concatenate_t<Numbers, TypeList<float, double>>;
 // TypeList<int, long, short, float, double>
 
+// Flatten nested lists
+using Nested = TypeList<TypeList<int, TypeList<long>>, short, TypeList<float>>;
+using Flat = Flatten_t<Nested>;
+// TypeList<int, long, short, float>
+
 // Query lists
 static_assert(IsList_v<Numbers>);
 static_assert(IsEmpty_v<Empty>);
@@ -212,6 +217,7 @@ using Tup = Apply_t<MakeTuple, List>;  // std::tuple<int, double, char>
 - `Prepend<List, T>` – Prepend element
 - `Append<List, T>` – Append element
 - `Concatenate<Lists...>` – Concatenate multiple lists (Lisp: append)
+- `Flatten<List>` – Flatten nested lists recursively (Lisp: flatten)
 
 ### List Access
 
@@ -248,7 +254,8 @@ using Tup = Apply_t<MakeTuple, List>;  // std::tuple<int, double, char>
 - `FoldLeft<Proc, Init, List>` – Left fold/reduce (Lisp: foldl)
 - `FoldRight<Proc, Init, List>` – Right fold/reduce (Lisp: foldr)
 - `Fold<Proc, Init, List>` – Alias for FoldLeft
-- `Reduce<Proc, List>` – FoldLeft on `Cdr_t<List>` using `Car_t<List>` as `Init`
+- `Reduce<Proc, List>` – FoldLeft on `Cdr_t<List>` using `Car_t<List>`
+  as `Init`
 - `Reverse<List>` – Reverse list order
 - `Zip<Lists...>` – Combine lists element-wise
 

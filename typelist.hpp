@@ -117,6 +117,30 @@ struct Concatenate<TypeList<Ts...>> {
 template <typename... Lists>
 using Concatenate_t = typename Concatenate<Lists...>::type;
 
+template <typename List>
+struct Flatten;  // (flatten lst)
+
+template <typename... Head, typename... Tail>
+struct Flatten<TypeList<TypeList<Head...>, Tail...>> {
+    using flattenedHead = typename Flatten<TypeList<Head...>>::type;
+    using flattenedTail = typename Flatten<TypeList<Tail...>>::type;
+    using type = Concatenate_t<flattenedHead, flattenedTail>;
+};
+
+template <typename Head, typename... Tail>
+struct Flatten<TypeList<Head, Tail...>> {
+    using flattenedTail = typename Flatten<TypeList<Tail...>>::type;
+    using type = Cons_t<Head, flattenedTail>;
+};
+
+template <>
+struct Flatten<TypeList<>> {
+    using type = TypeList<>;
+};
+
+template <typename List>
+using Flatten_t = typename Flatten<List>::type;
+
 template <typename List, typename T>
 struct Contains;
 

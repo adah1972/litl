@@ -114,6 +114,19 @@ int main()
                                       TypeList<Int<3>>, TypeList<Int<4>>>;
     static_assert(std::is_same_v<MultiConcat, T3>);
 
+    // Flatten
+    static_assert(std::is_same_v<Flatten_t<Nil>, Nil>);
+    static_assert(std::is_same_v<Flatten_t<NumSeq>, NumSeq>);
+    static_assert(std::is_same_v<
+                  Flatten_t<TypeList<TypeList<Int<1>, Int<2>>,
+                                     TypeList<Int<3>, TypeList<Int<4>>>>>,
+                  TypeList<Int<1>, Int<2>, Int<3>, Int<4>>>);
+    static_assert(
+        std::is_same_v<Flatten_t<TypeList<TypeList<TypeList<Int<1>>>>>,
+                       TypeList<Int<1>>>);
+    static_assert(std::is_same_v<Flatten_t<TypeList<Nil, Int<1>, Nil>>,
+                                 TypeList<Int<1>>>);
+
     // ------------------------------------------------------------------------
     // List Access and Modification
     // ------------------------------------------------------------------------
