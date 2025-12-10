@@ -223,10 +223,19 @@ using Apply_t = typename Apply<Proc, List>::type;
 
 template <template <typename...> class Pred>
 struct Not {
+#if !defined(__clang__) || (__clang_major__ >= 19) || \
+    (defined(__apple_build_version__) && _LIBCPP_VERSION >= 190000)
     template <typename... Args>
     struct type : std::bool_constant<!Pred<Args...>::value> {};
-    // If you need Not, you usually do not want Not_v.
+#else
+    // Clang < 19 requires exact arity matching for template template
+    // parameters (P0522 not fully implemented), so we fall back to a
+    // unary version here.
+    template <typename Arg>
+    struct type : std::bool_constant<!Pred<Arg>::value> {};
+#endif
 };
+// If you need Not, you usually do not want Not_v.
 
 template <template <typename> class Pred, typename List>
 struct All;
