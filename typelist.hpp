@@ -146,7 +146,7 @@ struct Contains;
 
 template <typename Head, typename... Tail, typename T>
 struct Contains<TypeList<Head, Tail...>, T>
-    : std::bool_constant<Contains<TypeList<Tail...>, T>::value> {};
+    : Contains<TypeList<Tail...>, T> {};
 
 template <typename... Tail, typename T>
 struct Contains<TypeList<T, Tail...>, T> : std::true_type {};
